@@ -13,7 +13,7 @@ _fzf_complete_docker_run () {
 }
 
 _fzf_complete_docker_common_post() {
-    awk -F"\t" '{print $1}'
+    awk -F"\t" '{print $2}'
 }
 
 _fzf_complete_docker_common () {
