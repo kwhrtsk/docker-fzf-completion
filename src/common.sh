@@ -30,3 +30,22 @@ _fzf_complete_docker_container () {
     )
 }
 
+_fzf_complete_docker_container_running_post() {
+    awk '{print $NF}'
+}
+
+_fzf_complete_docker_container_running () {
+    _fzf_complete "$DOCKER_FZF_PREFIX -m --header-lines=1" "$@" < <(
+        docker ps
+    )
+}
+
+_fzf_complete_docker_container_stopped_post() {
+    awk '{print $NF}'
+}
+
+_fzf_complete_docker_container_stopped () {
+    _fzf_complete "$DOCKER_FZF_PREFIX -m --header-lines=1" "$@" < <(
+        docker ps --filter "status=exited" --filter="status=created"
+    )
+}

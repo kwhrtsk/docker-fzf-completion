@@ -18,13 +18,61 @@ _fzf_complete_docker() {
                 _fzf_complete_docker_run "$@"
                 return
             ;;
-            exec|rm)
+            exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
+                _fzf_complete_docker_container_running "$@"
+                return
+            ;;
+            start)
+                _fzf_complete_docker_container_stopped "$@"
+                return
+            ;;
+            commit|cp|diff|export|logs|rename|restart|rm|update)
                 _fzf_complete_docker_container "$@"
                 return
             ;;
-            save|load|push|pull|tag|rmi)
+            save|push|pull|tag|rmi|history|inspect|create)
                 _fzf_complete_docker_common "$@"
                 return
+            ;;
+            container)
+                (( counter++ ))
+                while [ $counter -lt $cword ]; do
+                    case "${words[$counter]}" in
+                        run)
+                            _fzf_complete_docker_run "$@"
+                            return
+                        ;;
+                        exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
+                            _fzf_complete_docker_container_running "$@"
+                            return
+                        ;;
+                        start)
+                            _fzf_complete_docker_container_stopped "$@"
+                            return
+                        ;;
+                        commit|cp|diff|export|inspect|logs|rename|restart|rm|update)
+                            _fzf_complete_docker_container "$@"
+                            return
+                        ;;
+                        create)
+                            _fzf_complete_docker_common "$@"
+                            return
+                        ;;
+                    esac
+                    (( counter++ ))
+                done
+            ;;
+            image)
+                (( counter++ ))
+                while [ $counter -lt $cword ]; do
+                    case "${words[$counter]}" in
+                        save|push|pull|tag|rm|history|inspect)
+                            _fzf_complete_docker_common "$@"
+                            return
+                        ;;
+                    esac
+                    (( counter++ ))
+                done
             ;;
         esac
         (( counter++ ))
