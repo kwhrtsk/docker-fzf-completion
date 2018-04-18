@@ -7,5 +7,5 @@ clean:
 docker-fzf.%: src/docker-fzf.tmpl.% src/common.sh 
 	rm -f $@
 	cat $< >> $@
-	sed -i -e '/#{{content}}/{r src/common.sh' -e 'd}' $@ 
+	gsed -i -e '/#{{content}}/{r src/common.sh' -e 'd}' $@ 
 
