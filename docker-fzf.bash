@@ -2,23 +2,13 @@
 
 export DOCKER_FZF_PREFIX="--bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all"
 
-_fzf_complete_docker_run_post() {
-    awk '{print $1":"$2}'
-}
-
-_fzf_complete_docker_run () {
-    _fzf_complete "$DOCKER_FZF_PREFIX -m --header-lines=1" "$@" < <(
-        docker images
-    )
-}
-
 _fzf_complete_docker_image_post() {
-    awk -F"\t" '{print $2}'
+  awk '{ if ($1=="<none>") print $3; else print $1":"$2 }'
 }
 
 _fzf_complete_docker_image () {
-    _fzf_complete "$DOCKER_FZF_PREFIX --reverse -m" "$@" < <(
-        docker images --format "{{.Repository}}:{{.Tag}}\t {{.ID}}"
+    _fzf_complete "$DOCKER_FZF_PREFIX -m --header-lines=1" "$@" < <(
+        docker images
     )
 }
 
@@ -64,10 +54,6 @@ _fzf_complete_docker() {
     local counter=1
     while [ $counter -lt $cword ]; do
         case "${words[$counter]}" in
-            run)
-                _fzf_complete_docker_run "$@"
-                return
-            ;;
             exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
                 _fzf_complete_docker_container_running "$@"
                 return
@@ -80,7 +66,7 @@ _fzf_complete_docker() {
                 _fzf_complete_docker_container "$@"
                 return
             ;;
-            save|push|pull|tag|rmi|history|inspect|create)
+            run|save|push|pull|tag|rmi|history|inspect|create)
                 _fzf_complete_docker_image "$@"
                 return
             ;;
@@ -88,10 +74,6 @@ _fzf_complete_docker() {
                 (( counter++ ))
                 while [ $counter -lt $cword ]; do
                     case "${words[$counter]}" in
-                        run)
-                            _fzf_complete_docker_run "$@"
-                            return
-                        ;;
                         exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
                             _fzf_complete_docker_container_running "$@"
                             return
@@ -104,7 +86,7 @@ _fzf_complete_docker() {
                             _fzf_complete_docker_container "$@"
                             return
                         ;;
-                        create)
+                        run|create)
                             _fzf_complete_docker_image "$@"
                             return
                         ;;

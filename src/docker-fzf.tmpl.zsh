@@ -13,10 +13,6 @@ _fzf_complete_docker() {
     fi
     docker_command=${tokens[2]}
     case "$docker_command" in
-        run)
-            _fzf_complete_docker_run "$@"
-            return
-        ;;
         exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
             _fzf_complete_docker_container_running "$@"
             return
@@ -29,7 +25,7 @@ _fzf_complete_docker() {
             _fzf_complete_docker_container "$@"
             return
         ;;
-        save|push|pull|tag|rmi|history|inspect|create)
+        run|save|push|pull|tag|rmi|history|inspect|create)
             _fzf_complete_docker_image "$@"
             return
         ;;
@@ -39,10 +35,6 @@ _fzf_complete_docker() {
             fi
             docker_command=${tokens[3]}
             case "$docker_command" in
-                run)
-                    _fzf_complete_docker_run "$@"
-                    return
-                ;;
                 exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
                     _fzf_complete_docker_container_running "$@"
                     return
@@ -55,7 +47,7 @@ _fzf_complete_docker() {
                     _fzf_complete_docker_container "$@"
                     return
                 ;;
-                create)
+                run|create)
                     _fzf_complete_docker_image "$@"
                     return
                 ;;

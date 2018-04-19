@@ -14,10 +14,6 @@ _fzf_complete_docker() {
     local counter=1
     while [ $counter -lt $cword ]; do
         case "${words[$counter]}" in
-            run)
-                _fzf_complete_docker_run "$@"
-                return
-            ;;
             exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
                 _fzf_complete_docker_container_running "$@"
                 return
@@ -30,7 +26,7 @@ _fzf_complete_docker() {
                 _fzf_complete_docker_container "$@"
                 return
             ;;
-            save|push|pull|tag|rmi|history|inspect|create)
+            run|save|push|pull|tag|rmi|history|inspect|create)
                 _fzf_complete_docker_image "$@"
                 return
             ;;
@@ -38,10 +34,6 @@ _fzf_complete_docker() {
                 (( counter++ ))
                 while [ $counter -lt $cword ]; do
                     case "${words[$counter]}" in
-                        run)
-                            _fzf_complete_docker_run "$@"
-                            return
-                        ;;
                         exec|attach|kill|pause|unpause|port|stats|stop|top|wait)
                             _fzf_complete_docker_container_running "$@"
                             return
@@ -54,7 +46,7 @@ _fzf_complete_docker() {
                             _fzf_complete_docker_container "$@"
                             return
                         ;;
-                        create)
+                        run|create)
                             _fzf_complete_docker_image "$@"
                             return
                         ;;
