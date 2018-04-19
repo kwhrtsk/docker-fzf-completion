@@ -31,7 +31,7 @@ _fzf_complete_docker() {
                 return
             ;;
             save|push|pull|tag|rmi|history|inspect|create)
-                _fzf_complete_docker_common "$@"
+                _fzf_complete_docker_image "$@"
                 return
             ;;
             container)
@@ -55,7 +55,7 @@ _fzf_complete_docker() {
                             return
                         ;;
                         create)
-                            _fzf_complete_docker_common "$@"
+                            _fzf_complete_docker_image "$@"
                             return
                         ;;
                     esac
@@ -67,7 +67,7 @@ _fzf_complete_docker() {
                 while [ $counter -lt $cword ]; do
                     case "${words[$counter]}" in
                         save|push|pull|tag|rm|history|inspect)
-                            _fzf_complete_docker_common "$@"
+                            _fzf_complete_docker_image "$@"
                             return
                         ;;
                     esac

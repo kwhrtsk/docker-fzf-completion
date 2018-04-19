@@ -10,11 +10,11 @@ _fzf_complete_docker_run () {
     )
 }
 
-_fzf_complete_docker_common_post() {
+_fzf_complete_docker_image_post() {
     awk -F"\t" '{print $2}'
 }
 
-_fzf_complete_docker_common () {
+_fzf_complete_docker_image () {
     _fzf_complete "$DOCKER_FZF_PREFIX --reverse -m" "$@" < <(
         docker images --format "{{.Repository}}:{{.Tag}}\t {{.ID}}"
     )
