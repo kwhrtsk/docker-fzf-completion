@@ -24,3 +24,5 @@ Extends default docker completion with fzf
 * While completion for image commands, show full output of `docker images`, not only `REPOSITORY:TAG IMAGE_ID`.
 
 Original code is [Mike-Now/docker-fzf-completion](https://github.com/Mike-Now/docker-fzf-completion)(MIT License).
+
+For details, please refer to [this blog post](https://chopschips.net/blog/2018/04/17/docker-completion/).
